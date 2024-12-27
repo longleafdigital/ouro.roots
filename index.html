@@ -10,7 +10,7 @@
     
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: calibri, sans-serif;
             margin: 0;
             padding: 20px;
             background: #f5f5f5;
@@ -19,10 +19,9 @@
         #myDiagramDiv {
             background: white;
             width: 100%;
-            height: 800px;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 900px;
+            border: 1px solid #d3d3d3;
+            border-radius: 4px;
         }
 
         .controls {
@@ -35,14 +34,9 @@
             margin: 0 8px;
             border: none;
             border-radius: 4px;
-            background: #2980b9;
+            background: #4b9dcb;
             color: white;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #3498db;
         }
     </style>
 </head>
@@ -61,77 +55,89 @@
             layout: $(go.TreeLayout, {
                 angle: 90,
                 nodeSpacing: 20,
-                layerSpacing: 50,
+                layerSpacing: 80,
                 arrangement: go.TreeLayout.ArrangementFixedRoots
-            })
+            }),
+            maxSelectionCount: 1
         });
 
         // Node template
         myDiagram.nodeTemplate =
-            $(go.Node, "Auto",
-                $(go.Shape, "Rectangle", {
-                    fill: "white",
-                    stroke: "#2980b9",
-                    strokeWidth: 2,
-                    shadowVisible: true
-                }),
-                $(go.Panel, "Vertical",
-                    { margin: 8 },
-                    $(go.TextBlock, {
-                        font: "bold 14px sans-serif",
-                        stroke: "#2c3e50",
-                        textAlign: "center"
-                    }, new go.Binding("text", "name")),
-                    $(go.TextBlock, {
-                        font: "12px sans-serif",
-                        stroke: "#7f8c8d"
-                    }, new go.Binding("text", "dates"))
+            $(go.Node, "Vertical",
+                { selectionObjectName: "PANEL" },
+                $(go.Panel, "Auto",
+                    { name: "PANEL" },
+                    $(go.Shape, "Rectangle",
+                        { fill: "white", stroke: "#919191", strokeWidth: 2 },
+                        new go.Binding("fill", "gender", function(gender) {
+                            return gender === "M" ? "#FFE8E8" : "#E8F0FF";
+                        })),
+                    $(go.Panel, "Table",
+                        { margin: 10, maxSize: new go.Size(200, NaN) },
+                        $(go.TextBlock,
+                            {
+                                row: 0,
+                                column: 0,
+                                columnSpan: 2,
+                                font: "bold 14px Calibri",
+                                stroke: "#000000",
+                                wrap: go.TextBlock.WrapFit,
+                                textAlign: "center"
+                            },
+                            new go.Binding("text", "name")),
+                        $(go.TextBlock,
+                            {
+                                row: 1,
+                                column: 0,
+                                columnSpan: 2,
+                                font: "12px Calibri",
+                                stroke: "#555555",
+                                wrap: go.TextBlock.WrapFit,
+                                textAlign: "center"
+                            },
+                            new go.Binding("text", "dates"))
+                    )
                 )
             );
 
         // Link template
         myDiagram.linkTemplate =
-            $(go.Link, {
-                routing: go.Link.Orthogonal,
-                corner: 5
-            },
-                $(go.Shape, {
-                    strokeWidth: 2,
-                    stroke: "#95a5a6"
-                })
+            $(go.Link,
+                { routing: go.Link.Orthogonal, corner: 5 },
+                $(go.Shape, { strokeWidth: 2, stroke: "#555555" })
             );
 
         // Family tree data
         var nodeDataArray = [
             // Your direct line
-            { key: 1, name: "Blake Robert Mizelle", dates: "1992-Present" },
+            { key: 1, name: "Blake Robert Mizelle", dates: "1992-Present", gender: "M" },
             
             // Mizelle Line
-            { key: 2, name: "Robert Lindsay Mizelle Jr.", dates: "1964-Present", parent: 1 },
-            { key: 3, name: "Robert Lindsay Mizelle Sr.", dates: "1940-2018", parent: 2 },
-            { key: 4, name: "Melvin Mizelle", dates: "1912-1994", parent: 3 },
-            { key: 5, name: "Arthur Garfield Mizelle", dates: "1883-1969", parent: 4 },
-            { key: 6, name: "Joseph Mizelle", dates: "1858-", parent: 5 },
-            { key: 7, name: "Anson Mizell", dates: "1818-", parent: 6 },
-            { key: 8, name: "Durant Mizell", dates: "1768-", parent: 7 },
-            { key: 9, name: "James Edward Mizelle Sr.", dates: "1749-1827", parent: 8 },
+            { key: 2, name: "Robert Lindsay Mizelle Jr.", dates: "1964-Present", gender: "M", parent: 1 },
+            { key: 3, name: "Robert Lindsay Mizelle Sr.", dates: "1940-2018", gender: "M", parent: 2 },
+            { key: 4, name: "Melvin Mizelle", dates: "1912-1994", gender: "M", parent: 3 },
+            { key: 5, name: "Arthur Garfield Mizelle", dates: "1883-1969", gender: "M", parent: 4 },
+            { key: 6, name: "Joseph Mizelle", dates: "1858-", gender: "M", parent: 5 },
+            { key: 7, name: "Anson Mizell", dates: "1818-", gender: "M", parent: 6 },
+            { key: 8, name: "Durant Mizell", dates: "1768-", gender: "M", parent: 7 },
+            { key: 9, name: "James Edward Mizelle Sr.", dates: "1749-1827", gender: "M", parent: 8 },
             
             // White Line
-            { key: 10, name: "Lisa White Mizelle", dates: "1964-Present", parent: 1 },
-            { key: 11, name: "William Scarborough White", dates: "1937-2016", parent: 10 },
-            { key: 12, name: "William Scott White", dates: "1916-1991", parent: 11 },
-            { key: 13, name: "Ulysses Scott White", dates: "1894-1960", parent: 12 },
-            { key: 14, name: "Bryant Preston White", dates: "1872-1950", parent: 13 },
-            { key: 15, name: "Bryant White", dates: "1827-1905", parent: 14 },
-            { key: 16, name: "Reuben Julian White Jr.", dates: "1797-1865", parent: 15 },
-            { key: 17, name: "Reuben Julian White Sr.", dates: "1765-1835", parent: 16 },
-            { key: 18, name: "Meade W. White", dates: "1735-1804", parent: 17 }
+            { key: 10, name: "Lisa White Mizelle", dates: "1964-Present", gender: "F", parent: 1 },
+            { key: 11, name: "William Scarborough White", dates: "1937-2016", gender: "M", parent: 10 },
+            { key: 12, name: "William Scott White", dates: "1916-1991", gender: "M", parent: 11 },
+            { key: 13, name: "Ulysses Scott White", dates: "1894-1960", gender: "M", parent: 12 },
+            { key: 14, name: "Bryant Preston White", dates: "1872-1950", gender: "M", parent: 13 },
+            { key: 15, name: "Bryant White", dates: "1827-1905", gender: "M", parent: 14 },
+            { key: 16, name: "Reuben Julian White Jr.", dates: "1797-1865", gender: "M", parent: 15 },
+            { key: 17, name: "Reuben Julian White Sr.", dates: "1765-1835", gender: "M", parent: 16 },
+            { key: 18, name: "Meade W. White", dates: "1735-1804", gender: "M", parent: 17 }
         ];
 
-        // Create the model with the node data
+        // Create the model
         myDiagram.model = new go.TreeModel(nodeDataArray);
 
-        // Helper functions for buttons
+        // Helper functions
         function zoomToFit() {
             myDiagram.commandHandler.zoomToFit();
         }
