@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ouro.Roots Family Tree</title>
+    
+    <!-- Modern fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap">
+    
+    <!-- PDF-friendly styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+    
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .container {
+            width: 210mm;
+            padding: 20mm;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #34495e;
+            padding-bottom: 20px;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding: 20px 0;
+            border-left: 3px solid #3498db;
+        }
+
+        .event {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+            page-break-inside: avoid;
+        }
+
+        .event::before {
+            content: "";
+            position: absolute;
+            left: -10px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background-color: #3498db;
+            border-radius: 50%;
+            box-shadow: 0 0 0 5px rgba(52, 152, 219, 0.2);
+        }
+
+        .event h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            color: #2980b9;
+        }
+
+        .event p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        .century {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .highlight {
+            background-color: #edf7ff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid #3498db;
+        }
+
+        .major-event {
+            margin: 10px 0 0 40px;
+            font-size: 0.95rem;
+            color: #34495e;
+        }
+
+        .world-war {
+            color: #c0392b;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                width: 210mm;
+                height: 297mm;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .event {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body class="A4">
+  <div class="container">
+    <h1>Ouro.Roots Family Tree Timeline</h1>
+    <p>This is a timeline of your maternal lineage paired with major historical events.</p>
+    <div class="timeline">
+
+      <!-- 21st Century -->
+      <div class="event">
+        <h3>Blake Robert Mizelle</h3>
+        <p>Born in 1992 – Present</p>
+        <p class="century">21st Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> Rise of the internet, 9/11, and global digital transformation.</p>
+      </div>
+
+      <!-- 20th Century -->
+      <div class="event">
+        <h3>Lisa White Mizelle</h3>
+        <p>Born in 1964 – Present</p>
+        <p class="century">20th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> Civil Rights Movement, Cold War, and Vietnam War.</p>
+      </div>
+      <div class="event">
+        <h3>William Scarborough White</h3>
+        <p>1937–2016</p>
+        <p class="century">20th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> World War II aftermath, Korean War.</p>
+      </div>
+      <div class="event">
+        <h3>William Scott White ("Papa")</h3>
+        <p>1916–1991</p>
+        <p class="century">20th Century</p>
+        <p class="major-event"><span class="world-war">World War II:</span> 1939–1945</p>
+      </div>
+      <div class="event">
+        <h3>Ulysses Scott White</h3>
+        <p>1894–1960</p>
+        <p class="century">20th Century / Late 19th Century</p>
+        <p class="major-event"><span class="world-war">World War I:</span> 1914–1918</p>
+      </div>
+
+      <!-- 19th Century -->
+      <div class="event">
+        <h3>Bryant Preston White</h3>
+        <p>1872–1950</p>
+        <p class="century">19th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> Industrial Revolution, Reconstruction Era (USA).</p>
+      </div>
+      <div class="event">
+        <h3>Bryant White</h3>
+        <p>1827–1905?</p>
+        <p class="century">19th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> American Civil War (1861–1865).</p>
+      </div>
+
+      <!-- 18th Century -->
+      <div class="event">
+        <h3>Reuben Julian White Jr.</h3>
+        <p>1797–1865</p>
+        <p class="century">18th Century / Early 19th Century</p>
+      </div>
+      <div class="event">
+        <h3>Reuben Julian White Sr.</h3>
+        <p>1765–1835</p>
+        <p class="century">18th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> American Revolution (1775–1783).</p>
+      </div>
+      <div class="event">
+        <h3>Meade W. White</h3>
+        <p>1735–1804</p>
+        <p class="century">18th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> Formation of the United States (1776).</p>
+      </div>
+
+      <!-- 17th Century -->
+      <div class="event">
+        <h3>Mordecai White</h3>
+        <p>1693–1779</p>
+        <p class="century">17th Century</p>
+      </div>
+      <div class="event">
+        <h3>John Christopher White</h3>
+        <p>1667–1718</p>
+        <p class="century">17th Century</p>
+        <p class="major-event"><span class="highlight">Global Context:</span> Colonial America, transatlantic migration.</p>
+      </div>
+
+    </div>
+  </div>
+
+
+</body></html>
