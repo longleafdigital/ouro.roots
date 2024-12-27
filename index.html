@@ -5,325 +5,145 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ouro.Roots Family Tree</title>
     
-    <!-- Modern fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap">
-    
-    <!-- PDF-friendly styling -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.css">
+    <!-- GoJS Library -->
+    <script src="https://unpkg.com/gojs/release/go.js"></script>
     
     <style>
-        @page {
-            size: A4;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
         }
         
-        body {
-            font-family: 'Source Sans Pro', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: white;
-            color: #2c3e50;
-            line-height: 1.6;
-        }
-
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .container {
-            width: 210mm;
-            padding: 20mm;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid #34495e;
-            padding-bottom: 20px;
-        }
-
-        .timeline-container {
-            display: flex;
-            justify-content: center;
-            position: relative;
-            margin-top: 60px;
-        }
-
-        .timeline-branch {
-            width: 45%;
-            position: relative;
-        }
-
-        .timeline-branch.left {
-            padding-right: 40px;
-            border-right: none;
-        }
-
-        .timeline-branch.right {
-            padding-left: 40px;
-            border-left: none;
-        }
-
-        .center-person {
-            text-align: center;
-            position: relative;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: #edf7ff;
+        #myDiagramDiv {
+            background: white;
+            width: 100%;
+            height: 800px;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .branch-label {
+        .controls {
+            margin: 20px 0;
             text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            color: #2980b9;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-bottom: 2px solid #3498db;
         }
 
-        .timeline {
-            position: relative;
-            margin: 40px 0;
-            padding: 20px 0;
-            border-left: 3px solid #3498db;
-        }
-
-        .timeline::before {
-            content: "";
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            height: 20px;
-            width: 3px;
-            background-color: #3498db;
-        }
-
-        .event {
-            position: relative;
-            margin-bottom: 40px;
-            padding-left: 30px;
-            page-break-inside: avoid;
-        }
-
-        .event::before {
-            content: "";
-            position: absolute;
-            left: -10px;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            background-color: #3498db;
-            border-radius: 50%;
-            box-shadow: 0 0 0 5px rgba(52, 152, 219, 0.2);
-        }
-
-        .event h3 {
-            margin: 0;
-            font-size: 1.4rem;
-            color: #2980b9;
-        }
-
-        .event p {
-            margin: 5px 0;
-            font-size: 1rem;
-        }
-
-        .century {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            font-style: italic;
-            margin-top: 5px;
-        }
-
-        .highlight {
-            background-color: #edf7ff;
-            padding: 8px 12px;
+        button {
+            padding: 8px 16px;
+            margin: 0 8px;
+            border: none;
             border-radius: 4px;
-            border-left: 3px solid #3498db;
+            background: #2980b9;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
         }
 
-        .major-event {
-            margin: 10px 0 0 40px;
-            font-size: 0.95rem;
-            color: #34495e;
-        }
-
-        .world-war {
-            color: #c0392b;
-            font-weight: 600;
-        }
-
-        .timeline-branch.left .timeline {
-            border-left-color: #e74c3c;
-        }
-
-        .timeline-branch.left .event::before {
-            background-color: #e74c3c;
-            box-shadow: 0 0 0 5px rgba(231, 76, 60, 0.2);
-        }
-
-        .timeline-branch.left .event h3 {
-            color: #c0392b;
-        }
-
-        @media print {
-            body {
-                width: 210mm;
-                height: 297mm;
-            }
-            .container {
-                box-shadow: none;
-            }
-            .event {
-                break-inside: avoid;
-            }
+        button:hover {
+            background: #3498db;
         }
     </style>
 </head>
-<body class="A4">
-    <div class="container">
-        <div class="header">
-            <h1>Ouro.Roots Family Tree Timeline</h1>
-            <p>A convergence of the White and Mizelle family lines</p>
-        </div>
-
-        <div class="center-person">
-            <h3>Blake Robert Mizelle</h3>
-            <p>Born in 1992 – Present</p>
-            <p class="century">21st Century</p>
-            <p class="major-event"><span class="highlight">Where Two Family Lines Meet</span></p>
-        </div>
-
-        <div class="timeline-container">
-            <!-- Mizelle Line (Left) -->
-            <div class="timeline-branch left">
-                <div class="branch-label">Mizelle Paternal Line</div>
-                <div class="timeline">
-                    <div class="event">
-                        <h3>Robert Lindsay Mizelle Jr.</h3>
-                        <p>1964 – Present</p>
-                        <p class="century">20th Century</p>
-                    </div>
-                    
-                    <div class="event">
-                        <h3>Robert Lindsay Mizelle Sr.</h3>
-                        <p>1940 – 2018</p>
-                        <p class="century">20th Century</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Melvin Mizelle</h3>
-                        <p>1912 – 1994</p>
-                        <p class="century">20th Century</p>
-                        <p class="major-event"><span class="world-war">World War II Era</span></p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Arthur Garfield Mizelle</h3>
-                        <p>1883 – 1969</p>
-                        <p class="century">19th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> Industrial Revolution</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Joseph Mizelle</h3>
-                        <p>Born in 1858</p>
-                        <p class="century">19th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> American Civil War Era</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Anson Mizell</h3>
-                        <p>Born in 1818</p>
-                        <p class="century">19th Century</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Durant Mizell</h3>
-                        <p>Born in 1768</p>
-                        <p class="century">18th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> American Revolution</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>James Edward Mizelle Sr.</h3>
-                        <p>1749 – 1827</p>
-                        <p class="century">18th Century</p>
-                        <p class="major-event"><span class="highlight">Married Sarah King, 1769</span></p>
-                        <p class="major-event">Tyrell Courthouse marriage records</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- White Line (Right) -->
-            <div class="timeline-branch right">
-                <div class="branch-label">White Paternal Line</div>
-                <div class="timeline">
-                    <div class="event">
-                        <h3>Lisa White Mizelle</h3>
-                        <p>Born in 1964 – Present</p>
-                        <p class="century">20th Century</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>William Scarborough White</h3>
-                        <p>1937–2016</p>
-                        <p class="century">20th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> World War II aftermath</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>William Scott White ("Papa")</h3>
-                        <p>1916–1991</p>
-                        <p class="century">20th Century</p>
-                        <p class="major-event"><span class="world-war">World War II:</span> 1939–1945</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Ulysses Scott White</h3>
-                        <p>1894–1960</p>
-                        <p class="century">19th/20th Century</p>
-                        <p class="major-event"><span class="world-war">World War I:</span> 1914–1918</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Bryant Preston White</h3>
-                        <p>1872–1950</p>
-                        <p class="century">19th Century</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Bryant White</h3>
-                        <p>1827–1905</p>
-                        <p class="century">19th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> Civil War Era</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Reuben Julian White Jr.</h3>
-                        <p>1797–1865</p>
-                        <p class="century">18th/19th Century</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Reuben Julian White Sr.</h3>
-                        <p>1765–1835</p>
-                        <p class="century">18th Century</p>
-                        <p class="major-event"><span class="highlight">Global Context:</span> American Revolution</p>
-                    </div>
-
-                    <div class="event">
-                        <h3>Meade W. White</h3>
-                        <p>1735–1804</p>
-                        <p class="century">18th Century</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<body>
+    <div class="controls">
+        <button onclick="zoomToFit()">Zoom to Fit</button>
+        <button onclick="centerRoot()">Center on Root</button>
     </div>
+    <div id="myDiagramDiv"></div>
+
+    <script>
+        var $ = go.GraphObject.make;
+        var myDiagram = $(go.Diagram, "myDiagramDiv", {
+            initialAutoScale: go.Diagram.Uniform,
+            "undoManager.isEnabled": true,
+            layout: $(go.TreeLayout, {
+                angle: 90,
+                nodeSpacing: 20,
+                layerSpacing: 50,
+                arrangement: go.TreeLayout.ArrangementFixedRoots
+            })
+        });
+
+        // Node template
+        myDiagram.nodeTemplate =
+            $(go.Node, "Auto",
+                $(go.Shape, "Rectangle", {
+                    fill: "white",
+                    stroke: "#2980b9",
+                    strokeWidth: 2,
+                    shadowVisible: true
+                }),
+                $(go.Panel, "Vertical",
+                    { margin: 8 },
+                    $(go.TextBlock, {
+                        font: "bold 14px sans-serif",
+                        stroke: "#2c3e50",
+                        textAlign: "center"
+                    }, new go.Binding("text", "name")),
+                    $(go.TextBlock, {
+                        font: "12px sans-serif",
+                        stroke: "#7f8c8d"
+                    }, new go.Binding("text", "dates"))
+                )
+            );
+
+        // Link template
+        myDiagram.linkTemplate =
+            $(go.Link, {
+                routing: go.Link.Orthogonal,
+                corner: 5
+            },
+                $(go.Shape, {
+                    strokeWidth: 2,
+                    stroke: "#95a5a6"
+                })
+            );
+
+        // Family tree data
+        var nodeDataArray = [
+            // Your direct line
+            { key: 1, name: "Blake Robert Mizelle", dates: "1992-Present" },
+            
+            // Mizelle Line
+            { key: 2, name: "Robert Lindsay Mizelle Jr.", dates: "1964-Present", parent: 1 },
+            { key: 3, name: "Robert Lindsay Mizelle Sr.", dates: "1940-2018", parent: 2 },
+            { key: 4, name: "Melvin Mizelle", dates: "1912-1994", parent: 3 },
+            { key: 5, name: "Arthur Garfield Mizelle", dates: "1883-1969", parent: 4 },
+            { key: 6, name: "Joseph Mizelle", dates: "1858-", parent: 5 },
+            { key: 7, name: "Anson Mizell", dates: "1818-", parent: 6 },
+            { key: 8, name: "Durant Mizell", dates: "1768-", parent: 7 },
+            { key: 9, name: "James Edward Mizelle Sr.", dates: "1749-1827", parent: 8 },
+            
+            // White Line
+            { key: 10, name: "Lisa White Mizelle", dates: "1964-Present", parent: 1 },
+            { key: 11, name: "William Scarborough White", dates: "1937-2016", parent: 10 },
+            { key: 12, name: "William Scott White", dates: "1916-1991", parent: 11 },
+            { key: 13, name: "Ulysses Scott White", dates: "1894-1960", parent: 12 },
+            { key: 14, name: "Bryant Preston White", dates: "1872-1950", parent: 13 },
+            { key: 15, name: "Bryant White", dates: "1827-1905", parent: 14 },
+            { key: 16, name: "Reuben Julian White Jr.", dates: "1797-1865", parent: 15 },
+            { key: 17, name: "Reuben Julian White Sr.", dates: "1765-1835", parent: 16 },
+            { key: 18, name: "Meade W. White", dates: "1735-1804", parent: 17 }
+        ];
+
+        // Create the model with the node data
+        myDiagram.model = new go.TreeModel(nodeDataArray);
+
+        // Helper functions for buttons
+        function zoomToFit() {
+            myDiagram.commandHandler.zoomToFit();
+        }
+
+        function centerRoot() {
+            var root = myDiagram.findNodeForKey(1);
+            if (root !== null) myDiagram.select(root);
+            myDiagram.commandHandler.scrollToPart(root);
+        }
+
+        // Initial zoom to fit
+        zoomToFit();
+    </script>
 </body>
 </html>
